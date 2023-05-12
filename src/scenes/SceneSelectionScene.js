@@ -14,7 +14,6 @@ class SceneSelectionScene extends Phaser.Scene {
     var scene1 = this.add
       .image(newWidth / 2, newHeight / 2, 'scene1')
       .setOrigin(0.5);
-
     var r = Math.floor(Math.random() * 20);
     var image = `scene${r}`;
     var i = 2;
@@ -36,14 +35,16 @@ class SceneSelectionScene extends Phaser.Scene {
         // debugger;
       },
       ease: 'Linear',
-      onComplete: (tween, targets, param) => {
+      onComplete: (tween, targets) => {
         scene1.setTexture(targets[0].texture.key);
         this.newTexture = targets[0].texture.key;
         this.tweens.add({
           targets: scene1,
-
           scaleX: 3,
           scaleY: 3,
+          onComplete: (tween, targets) => {
+            this.scene.start('FightScene');
+          },
         });
         // debugger;
       },
