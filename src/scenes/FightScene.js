@@ -11,8 +11,18 @@ class FightScene extends Phaser.Scene {
     // debugger;
   }
   preload() {
+    if (this.newScene === 'scene1') {
+      this.newScene = 'sky';
+    } else if (this.newScene === 'scene2') {
+      this.newScene = 'streets';
+    } else if (this.newScene === 'scene3') {
+      this.newScene = 'space';
+    } else if (this.newScene === 'scene4') {
+      this.newScene = 'palace';
+    }
+    console.log('Loading');
     this.load.video(
-      'background',
+      'videoBackground',
       'https://d1ofwchetll7ui.cloudfront.net/' + this.newScene + '.mp4'
     );
   }
@@ -36,13 +46,8 @@ class FightScene extends Phaser.Scene {
     var pickOne = charArray[Math.floor(Math.random() * charArray.length)];
     var newHeight = this.game.config.height;
     var newWidth = this.game.config.width;
-    if (this.newScene === 'scene1') {
-      this.newScene = 'sky';
-    } else if (this.newScene === 'scene2') {
-      this.newScene = 'streets';
-    }
-    var character = ['Charity', 'LarsThundersquat'];
-    let background = this.add.video(0, 0, this.newScene);
+
+    let background = this.add.video(0, 0, 'videoBackground');
     background.setOrigin(0, 0);
     background.setSize(this.game.config.width, this.game.config.height);
     background.setScale(newWidth / 1080);

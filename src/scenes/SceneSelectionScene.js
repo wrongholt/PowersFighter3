@@ -25,14 +25,14 @@ class SceneSelectionScene extends Phaser.Scene {
       props: {
         scaleX: { value: 0, duration: 100, yoyo: true },
         texture: {
-          value: 'scene' + [Math.floor(Math.random() * 2) + 1],
+          value: 'scene' + [Math.floor(Math.random() * 4) + 1],
           duration: 0,
           delay: 1500,
         },
       },
       repeat: r,
       onRepeat: (tween, target) => {
-        var texture = 'scene' + [Math.floor(Math.random() * 2) + 1];
+        var texture = 'scene' + [Math.floor(Math.random() * 4) + 1];
         target.setTexture(texture);
         console.log('TEXTURES', this.texture);
         // debugger;
