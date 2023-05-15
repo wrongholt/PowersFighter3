@@ -1,7 +1,8 @@
-import HomeScene from "./src/scenes/HomeScene.js";
-import Preloader from "./src/scenes/Preloader.js";
-import FightScene from "./src/scenes/FightScene.js";
-import CharacterSelectionScene from "./src/scenes/CharacterSelectionScene.js";
+import HomeScene from './src/scenes/HomeScene.js';
+import Preloader from './src/scenes/Preloader.js';
+import FightScene from './src/scenes/FightScene.js';
+import CharacterSelectionScene from './src/scenes/CharacterSelectionScene.js';
+import SceneSelectionScene from './src/scenes/SceneSelectionScene.js';
 
 var newHeight = window.innerHeight;
 var newWidth = window.innerWidth - 25;
@@ -10,14 +11,15 @@ class Game extends Phaser.Game {
   constructor() {
     super(config);
     let fightScene = new FightScene({
-      rightChar: "Karrigan",
-      leftChar: "Lillith",
+      rightChar: 'Karrigan',
+      leftChar: 'Lillith',
     });
-    this.scene.add("HomeScene", HomeScene);
-    this.scene.add("Preloader", Preloader);
-    this.scene.add("CharacterSelectionScene", CharacterSelectionScene);
-    this.scene.add("FightScene", fightScene);
-    this.scene.start("Preloader");
+    this.scene.add('HomeScene', HomeScene);
+    this.scene.add('Preloader', Preloader);
+    this.scene.add('CharacterSelectionScene', CharacterSelectionScene);
+    this.scene.add('SceneSelectionScene', SceneSelectionScene);
+    this.scene.add('FightScene', fightScene);
+    this.scene.start('Preloader');
   }
 }
 Game.srx = Math.max(window.innerWidth, window.innerHeight);
@@ -27,23 +29,23 @@ Game.logicWidth = 480;
 Game.logicHeight = 320;
 var r = Game.logicWidth / Game.logicHeight;
 if (Game.srx >= 360) {
-  Game.screen = "small";
+  Game.screen = 'small';
   Game.gameWidth = 360;
 }
 if (Game.srx >= 480) {
-  Game.screen = "normal";
+  Game.screen = 'normal';
   Game.gameWidth = 480;
 }
 if (Game.srx >= 720) {
-  Game.screen = "large";
+  Game.screen = 'large';
   Game.gameWidth = 720;
 }
 if (Game.srx >= 960) {
-  Game.screen = "xlarge";
+  Game.screen = 'xlarge';
   Game.gameWidth = 960;
 }
 if (Game.srx >= 1440) {
-  Game.screen = "xxlarge";
+  Game.screen = 'xxlarge';
   Game.gameWidth = 1440;
 }
 
@@ -57,7 +59,7 @@ Game.convertHeight = function (value) {
 };
 var config = {
   type: Phaser.AUTO,
-  parent: "gatorCamp",
+  parent: 'gatorCamp',
   width: Game.gameWidth,
   height: Game.gameHeight,
   scale: {
