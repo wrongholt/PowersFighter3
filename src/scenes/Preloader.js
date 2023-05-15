@@ -5,16 +5,21 @@ class BootScene extends Phaser.Scene {
   }
 
   preload() {
-    var arrayVideo = ['streets', 'sky'];
+    var arrayVideo = ['streets', 'sky', 'palace', 'space'];
     var pickOne = arrayVideo[Math.floor(Math.random() * arrayVideo.length)];
     this.load.crossOrigin = 'Anonymous';
     this.load.addFile(
       new WebFontFile(this.load, ['Sedgwick Ave Display', 'Lato', 'Caveat'])
     );
-    this.load.video(
+    this.load.image(
       'background',
-      'https://d1ofwchetll7ui.cloudfront.net/' + pickOne + '.mp4'
+      'https://d1ofwchetll7ui.cloudfront.net/' + pickOne + '.jpg'
     );
+    this.load.image('scene1', 'assets/sky.jpg');
+    this.load.image('scene2', 'assets/streets.jpg');
+    this.load.image('scene3', 'assets/space.jpg');
+    this.load.image('scene4', 'assets/palace.jpg');
+
     this.load.image(
       'logo',
       'https://d1ofwchetll7ui.cloudfront.net/powerslogo.png'

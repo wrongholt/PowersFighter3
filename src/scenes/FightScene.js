@@ -1,15 +1,48 @@
-import CharacterClass from "./parts/CharacterClass.js";
+import CharacterClass from './parts/CharacterClass.js';
 class FightScene extends Phaser.Scene {
   constructor(args) {
-    super({ key: "FightScene" });
+    super({ key: 'FightScene' });
   }
-  preload() {}
+  init(data) {
+    console.log('init', data);
+    this.chosenId = data.chosenId;
+    this.chosenName = data.chosenName;
+    this.newScene = data.newScene;
+    // debugger;
+  }
+  preload() {
+    this.load.video(
+      'background',
+      'https://d1ofwchetll7ui.cloudfront.net/' + this.newScene + '.mp4'
+    );
+  }
 
   create() {
+    const charArray = [
+      'Argus',
+      'Charity',
+      'Edge',
+      'ElectricMean',
+      'Karrigan',
+      'LarsThundersquat',
+      'Lillith',
+      'Randell',
+      'SharpySharp',
+      'Elkeema',
+      'CaptainNemo',
+      'DejahThoris',
+      'JohnCarter',
+    ];
+    var pickOne = charArray[Math.floor(Math.random() * charArray.length)];
     var newHeight = this.game.config.height;
     var newWidth = this.game.config.width;
-    var character = ["Charity", "LarsThundersquat"];
-    let background = this.add.video(0, 0, "background");
+    if (this.newScene === 'scene1') {
+      this.newScene = 'sky';
+    } else if (this.newScene === 'scene2') {
+      this.newScene = 'streets';
+    }
+    var character = ['Charity', 'LarsThundersquat'];
+    let background = this.add.video(0, 0, this.newScene);
     background.setOrigin(0, 0);
     background.setSize(this.game.config.width, this.game.config.height);
     background.setScale(newWidth / 1080);
@@ -17,49 +50,49 @@ class FightScene extends Phaser.Scene {
 
     this.leftChar = new CharacterClass(
       this,
-      -100,
+      -newWidth / 9.9,
       50,
-      "Charity",
-      "CharityIdle_000.png"
+      this.chosenId,
+      this.chosenId + 'Idle_000.png'
     );
 
     this.rightChar = new CharacterClass(
       this,
-      550,
+      newWidth / 2.1,
       50,
-      "LarsThundersquat",
-      "LarsThundersquatIdle_000.png"
-    ).setData({ name: "Grandpa Gator", id: "LarsThundersquat" });
+      pickOne,
+      pickOne + 'Idle_000.png'
+    ).setData({ name: 'Grandpa Gator', id: pickOne });
     this.rightChar.flipX = true;
 
     this.anims.create({
-      key: "character1animation",
-      frames: this[character[0]],
+      key: 'character1animation',
+      frames: this[this.chosenId],
       frameRate: 8,
       repeat: -1,
     });
     this.anims.create({
-      key: "character2animation",
-      frames: this[character[1]],
+      key: 'character2animation',
+      frames: this[pickOne],
       frameRate: 8,
       repeat: -1,
     });
 
-    this.leftChar.anims.play("character1animation");
-    this.rightChar.anims.play("character2animation");
+    this.leftChar.anims.play('character1animation');
+    this.rightChar.anims.play('character2animation');
   }
   characterClicked(character) {
-    character.on("pointerdown", function (pointer) {
+    character.on('pointerdown', function (pointer) {
       this.setTint(11843512);
-      var theCharacterData = this.getData("id");
+      var theCharacterData = this.getData('id');
       console.log(theCharacterData);
-      this.scene.scene.start("GatorCampScene", { id: theCharacterData });
+      this.scene.scene.start('GatorCampScene', { id: theCharacterData });
     });
-    character.on("pointerout", function (pointer) {
+    character.on('pointerout', function (pointer) {
       this.clearTint();
     });
 
-    character.on("pointerup", function (pointer) {
+    character.on('pointerup', function (pointer) {
       this.clearTint();
     });
   }

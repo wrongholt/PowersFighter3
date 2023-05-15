@@ -7,11 +7,10 @@ class CharacterSelectionScene extends Phaser.Scene {
   create() {
     var newHeight = this.game.config.height;
     var newWidth = this.game.config.width;
-    let background = this.add.video(0, 0, 'background');
+    let background = this.add.image(0, 0, 'background');
     background.setOrigin(0, 0);
     background.setSize(newWidth, newHeight);
     background.setScale(newWidth / 1080);
-    background.play(true);
     var title = this.add
       .text(newWidth / 2, 50, `Select Your Fighter`, {
         fontFamily: '"Sedgwick Ave Display"',
