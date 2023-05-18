@@ -10,22 +10,7 @@ class FightScene extends Phaser.Scene {
     this.newScene = data.newScene;
     // debugger;
   }
-  preload() {
-    if (this.newScene === 'scene1') {
-      this.newScene = 'sky';
-    } else if (this.newScene === 'scene2') {
-      this.newScene = 'streets';
-    } else if (this.newScene === 'scene3') {
-      this.newScene = 'space';
-    } else if (this.newScene === 'scene4') {
-      this.newScene = 'palace';
-    }
-    console.log('Loading');
-    this.load.video(
-      'videoBackground',
-      'https://d1ofwchetll7ui.cloudfront.net/' + this.newScene + '.mp4'
-    );
-  }
+  preload() {}
 
   create() {
     const charArray = [
@@ -46,8 +31,22 @@ class FightScene extends Phaser.Scene {
     var pickOne = charArray[Math.floor(Math.random() * charArray.length)];
     var newHeight = this.game.config.height;
     var newWidth = this.game.config.width;
-
-    let background = this.add.video(0, 0, 'videoBackground');
+    if (this.newScene === 'scene1') {
+      this.newScene = 'sky';
+    } else if (this.newScene === 'scene2') {
+      this.newScene = 'streets';
+    } else if (this.newScene === 'scene3') {
+      this.newScene = 'space';
+    } else if (this.newScene === 'scene4') {
+      this.newScene = 'palace';
+    }
+    let background = this.add
+      .video(0, 0)
+      .loadURL(
+        'https://d1ofwchetll7ui.cloudfront.net/' + this.newScene + '.mp4',
+        true,
+        'anonymous'
+      );
     background.setOrigin(0, 0);
     background.setSize(this.game.config.width, this.game.config.height);
     background.setScale(newWidth / 1080);

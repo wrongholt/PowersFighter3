@@ -11,19 +11,20 @@ class CharacterSelectionScene extends Phaser.Scene {
     background.setOrigin(0, 0);
     background.setSize(newWidth, newHeight);
     background.setScale(newWidth / 1080);
+
     var title = this.add
       .text(newWidth / 2, 50, `Select Your Fighter`, {
         fontFamily: '"Sedgwick Ave Display"',
-        fontSize: '4vh',
+        fontSize: '5vh',
       })
       .setOrigin(0.5);
     var characterContainer = this.add
       .container(-150, 0)
-      .setSize('30vw', '100vh');
+      .setSize(newWidth / 3, newHeight);
     var charTitle = this.add
-      .text(0, 0, `char`, {
+      .text(newWidth / 3.4, newHeight / 4.7, 'char', {
         fontFamily: '"Sedgwick Ave Display"',
-        fontSize: '2.5vh',
+        fontSize: '4vh',
       })
       .setOrigin(0.5)
       .setVisible(false);
@@ -80,7 +81,11 @@ class CharacterSelectionScene extends Phaser.Scene {
       .on('pointerdown', function (pointer) {
         this.setTint(11843512);
         button1Text3.setFontSize('3.5vh');
-        this.scene.scene.start('SceneSelectionScene');
+
+        this.scene.scene.start('SceneSelectionScene', {
+          chosenId: this.scene.charId,
+          chosenName: this.scene.name,
+        });
       })
       .on('pointerover', function (pointer) {
         this.setTint(11843512);
@@ -111,49 +116,50 @@ class CharacterSelectionScene extends Phaser.Scene {
         this.clearTint();
         button1Text3.setFontSize('3vh');
       });
-    button1Container3.add(button3).add(button1Text3);
+
+    button1Container3.add(button3).add(button1Text3).setVisible(false);
     this.input
       .on('pointerdown', function (pointer, gameObject) {
-        console.log(gameObject);
+        // console.log(gameObject);
         if (
           gameObject &&
           gameObject[0].hasOwnProperty('texture') &&
           gameObject[0].texture.key !== 'button'
         ) {
-          this.id = gameObject[0].getData('id');
-          this.name = gameObject[0].getData('name');
-
+          this.scene.charId = gameObject[0].getData('charId');
+          this.scene.name = gameObject[0].getData('name');
+          // debugger;
+          button1Container3.setVisible(true);
           gameObject[0].setTint(11843512);
 
           if (this.theLastCharacter) {
             this.theLastCharacter.setVisible(false);
           }
-          this.theLastCharacter = this.scene['characterAnim' + this.id];
-          this.scene['characterAnim' + this.id].setVisible(true);
-          charTitle.setText(this.name).setVisible(true);
+          this.theLastCharacter =
+            this.scene['characterAnim' + this.scene.charId];
+          this.scene['characterAnim' + this.scene.charId].setVisible(true);
+          charTitle.setText(this.scene.name).setVisible(true);
           characterContainer
-            .add(this.scene['characterAnim' + this.id])
+            .add(this.scene['characterAnim' + this.scene.charId])
             .add(charTitle);
-
-          // debugger;
           this.scene.anims.create({
-            key: this.id + 'animation',
-            frames: this.scene[this.id],
+            key: this.scene.charId + 'animation',
+            frames: this.scene[this.scene.charId],
             frameRate: 8,
             repeat: -1,
           });
 
-          this.scene['characterAnim' + this.id].anims.play(
-            this.id + 'animation'
+          this.scene['characterAnim' + this.scene.charId].anims.play(
+            this.scene.charId + 'animation'
           );
         } else {
           return;
         }
       })
       .on('pointerover', function (pointer, gameObject) {
-        console.log(gameObject);
+        // console.log(gameObject);
         if (gameObject[0].texture.key !== 'button') {
-          this.id = gameObject[0].getData('id');
+          // this.scene.charId = gameObject[0].getData("charId");
           gameObject[0].setTint(11843512);
           this.scene.tweens.chain({
             targets: gameObject[0],
@@ -177,13 +183,12 @@ class CharacterSelectionScene extends Phaser.Scene {
         }
       })
       .on('pointerout', function (pointer, gameObject) {
-        if (gameObject[0] && gameObject[0].hasOwnProperty('tintBottomLeft')) {
-          // debugger;
+        if (gameObject) {
           gameObject[0].clearTint();
         }
       })
       .on('pointerup', function (pointer, gameObject) {
-        if (gameObject[0] && gameObject[0].hasOwnProperty('tintBottomLeft')) {
+        if (gameObject) {
           gameObject[0].clearTint();
         }
       });
@@ -224,18 +229,18 @@ function characterTokens(scene) {
   var newChar = [];
   for (var i = 0; i < charArray.length; ) {
     var character = charArray[i];
-    console.log(character);
+    // console.log(character);
 
     scene[window[character + 'token']] = scene.add
       .image(0, 0, character + 'Avatar')
       .setScale(0.2)
-      .setData({ name: charNames[i], id: character })
+      .setData({ name: charNames[i], charId: charArray[i] })
       .setInteractive();
 
     newChar.push(scene[window[character + 'token']]);
     i++;
   }
-  console.log('NEW CHAR ARRAY!!!!!!!', newChar);
+  // console.log('NEW CHAR ARRAY!!!!!!!', newChar);
 
   return newChar;
 }

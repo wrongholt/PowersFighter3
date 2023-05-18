@@ -11,16 +11,6 @@ class BootScene extends Phaser.Scene {
     this.load.addFile(
       new WebFontFile(this.load, ['Sedgwick Ave Display', 'Lato', 'Caveat'])
     );
-    this.load.video(
-      'streets',
-      'https://d1ofwchetll7ui.cloudfront.net/streets.mp4'
-    );
-    this.load.video('sky', 'https://d1ofwchetll7ui.cloudfront.net/sky.mp4');
-    this.load.video(
-      'palace',
-      'https://d1ofwchetll7ui.cloudfront.net/palace.mp4'
-    );
-    this.load.video('space', 'https://d1ofwchetll7ui.cloudfront.net/space.mp4');
     this.load.image(
       'background',
       'https://d1ofwchetll7ui.cloudfront.net/' + pickOne + '.jpg'

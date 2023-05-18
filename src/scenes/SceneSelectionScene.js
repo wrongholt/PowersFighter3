@@ -34,7 +34,6 @@ class SceneSelectionScene extends Phaser.Scene {
       onRepeat: (tween, target) => {
         var texture = 'scene' + [Math.floor(Math.random() * 4) + 1];
         target.setTexture(texture);
-        console.log('TEXTURES', this.texture);
         // debugger;
       },
       ease: 'Linear',
